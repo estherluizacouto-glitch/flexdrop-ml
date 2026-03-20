@@ -455,7 +455,7 @@
   </div>
   <div class="nav-right">
     <div class="avatar">EC</div>
-    <span>Esther ∨</span>
+    <span>Loja 1</span>
     <span>Vender</span>
     <span>Contato</span>
     <div class="notif">
@@ -967,28 +967,6 @@ function initChart(d) {
       }
     }
   });
-}
-
-// ===== LOGIN =====
-const CREDENTIALS = { user: 'esther', pass: 'meli2026' }; // altere aqui
-
-function doLogin() {
-  const u = document.getElementById('login-user').value.trim();
-  const p = document.getElementById('login-pass').value;
-  const err = document.getElementById('login-error');
-
-  if (u === CREDENTIALS.user && p === CREDENTIALS.pass) {
-    const overlay = document.getElementById('login-overlay');
-    overlay.style.transition = 'opacity 0.4s';
-    overlay.style.opacity = '0';
-    setTimeout(() => overlay.classList.add('hidden'), 400);
-  } else {
-    err.style.display = 'block';
-    err.style.animation = 'none';
-    setTimeout(() => err.style.animation = 'shake 0.3s ease', 10);
-    document.getElementById('login-pass').value = '';
-    document.getElementById('login-pass').focus();
-  }
 }
 
 // ===== INIT =====
