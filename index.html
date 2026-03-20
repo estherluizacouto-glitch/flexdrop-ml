@@ -676,11 +676,11 @@
 const PERIOD_DATA = {
   hoje: {
     label: 'Hoje',
-    vendas: 3420,
-    vendasChg: 12,
+    vendas: 686.67,
+    vendasChg: 5,
     unidades: 7,
     unidadesChg: 8,
-    precoUnit: 488,
+    precoUnit: 137.33,
     precoUnitChg: 3,
     visitas: 142,
     visitasChg: 18,
@@ -698,7 +698,7 @@ const PERIOD_DATA = {
   },
   '7dias': {
     label: 'Últimos 7 dias',
-    vendas: 21870,
+    vendas: 2768.43,
     vendasChg: 24,
     unidades: 48,
     unidadesChg: 15,
@@ -720,7 +720,7 @@ const PERIOD_DATA = {
   },
   '15dias': {
     label: 'Últimos 15 dias',
-    vendas: 48650,
+    vendas: 4751.27,
     vendasChg: 19,
     unidades: 107,
     unidadesChg: 11,
@@ -742,7 +742,7 @@ const PERIOD_DATA = {
   },
   '30dias': {
     label: 'Últimos 30 dias',
-    vendas: 94200,
+    vendas: 9660.6,
     vendasChg: 32,
     unidades: 208,
     unidadesChg: 22,
@@ -820,7 +820,7 @@ function animateValue(id, start, end, isCurrency = false, isPercent = false, dur
     const current = start + (end - start) * ease;
 
     if (isCurrency) {
-      el.textContent = 'R$ ' + Math.round(current).toLocaleString('pt-BR');
+      el.textContent = 'R$ ' + current.toLocaleString('pt-BR', {minimumFractionDigits: 2, maximumFractionDigits: 2});
     } else if (isPercent) {
       el.textContent = current.toFixed(1) + '%';
     } else {
