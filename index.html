@@ -14,6 +14,104 @@
     min-height: 100vh;
   }
 
+  /* LOGIN OVERLAY */
+  #login-overlay {
+    position: fixed;
+    inset: 0;
+    background: #FFE600;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .login-box {
+    background: #fff;
+    border-radius: 16px;
+    padding: 40px 44px;
+    width: 100%;
+    max-width: 380px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.13);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .login-logo {
+    font-size: 32px;
+    font-weight: 900;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+  .login-logo-icon {
+    width: 48px; height: 48px;
+    background: #FFE600;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+  }
+  .login-subtitle {
+    font-size: 14px;
+    color: #888;
+    margin-top: -12px;
+    text-align: center;
+  }
+  .login-input-wrap {
+    width: 100%;
+    position: relative;
+  }
+  .login-input {
+    width: 100%;
+    padding: 13px 16px 13px 42px;
+    border: 1.5px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    background: #fafafa;
+  }
+  .login-input:focus { border-color: #1a7abf; background: #fff; }
+  .login-input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #aaa;
+  }
+  .login-btn {
+    width: 100%;
+    padding: 13px;
+    background: #FFE600;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    letter-spacing: 0.3px;
+  }
+  .login-btn:hover { background: #f0d800; }
+  .login-btn:active { transform: scale(0.98); }
+  .login-error {
+    color: #f23d4f;
+    font-size: 13px;
+    font-weight: 600;
+    display: none;
+    text-align: center;
+    animation: shake 0.3s ease;
+  }
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  #login-overlay.hidden { display: none; }
+
   /* TOP NAV */
   .topnav {
     background: #FFE600;
@@ -26,6 +124,11 @@
     top: 0;
     z-index: 100;
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .logo {
     display: flex;
@@ -441,11 +544,31 @@
 </head>
 <body>
 
+<!-- LOGIN OVERLAY -->
+<div id="login-overlay">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">🤝</div>
+      <div style="line-height:1.2">mercado<br><strong>livre</strong></div>
+    </div>
+    <p class="login-subtitle">Painel de métricas — acesso restrito</p>
+    <div class="login-input-wrap">
+      <span class="login-input-icon">👤</span>
+      <input class="login-input" id="login-user" type="text" placeholder="Usuário" autocomplete="off" onkeydown="if(event.key==='Enter')doLogin()" />
+    </div>
+    <div class="login-input-wrap">
+      <span class="login-input-icon">🔒</span>
+      <input class="login-input" id="login-pass" type="password" placeholder="Senha" onkeydown="if(event.key==='Enter')doLogin()" />
+    </div>
+    <div class="login-error" id="login-error">Usuário ou senha incorretos</div>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+  </div>
+</div>
+
 <!-- TOP NAV -->
 <nav class="topnav">
   <div class="logo">
-    <div class="logo-icon">🤝</div>
-    <span style="font-size:18px;">mercado<br><strong>livre</strong></span>
+    <img src="assets/logo.png" alt="Logo" style="height:36px; object-fit:contain;" />
   </div>
   <div class="nav-right">
     <div class="avatar">EC</div>
@@ -533,19 +656,15 @@
             <div class="dropdown-menu" id="ddPeriodMenu">
               <div class="dropdown-item active" onclick="selectPeriod('hoje','Hoje','Hoje, 20 mar 2026','ddPeriod')">
                 <div class="dropdown-item-title">Hoje</div>
-                <div class="dropdown-item-date">20 mar 2026</div>
               </div>
               <div class="dropdown-item" onclick="selectPeriod('7dias','Últimos 7 dias','13 a 20 mar 2026','ddPeriod')">
                 <div class="dropdown-item-title">Últimos 7 dias</div>
-                <div class="dropdown-item-date">13 a 20 mar 2026</div>
               </div>
               <div class="dropdown-item" onclick="selectPeriod('15dias','Últimos 15 dias','5 a 20 mar 2026','ddPeriod')">
                 <div class="dropdown-item-title">Últimos 15 dias</div>
-                <div class="dropdown-item-date">5 a 20 mar 2026</div>
               </div>
               <div class="dropdown-item" onclick="selectPeriod('30dias','Últimos 30 dias','18 fev a 20 mar 2026','ddPeriod')">
                 <div class="dropdown-item-title">Últimos 30 dias</div>
-                <div class="dropdown-item-date">18 fev a 20 mar 2026</div>
               </div>
               <div class="dropdown-item" onclick="selectPeriod('custom','Data personalizada','','ddPeriod')">
                 <div class="dropdown-item-title">Data personalizada</div>
@@ -653,7 +772,7 @@
 
     <!-- CHART -->
     <div class="chart-container">
-      <canvas id="metricsChart" height="120"></canvas>
+      <canvas id="metricsChart" height="60"></canvas>
       <div class="chart-legend">
         <div class="legend-item">
           <div class="legend-dot" style="background:#f23d4f;"></div>
@@ -967,11 +1086,34 @@ function initChart(d) {
   });
 }
 
+// ===== LOGIN =====
+const CREDENTIALS = { user: 'esther', pass: 'meli2026' }; // altere aqui
+
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-error');
+
+  if (u === CREDENTIALS.user && p === CREDENTIALS.pass) {
+    const overlay = document.getElementById('login-overlay');
+    overlay.style.transition = 'opacity 0.4s';
+    overlay.style.opacity = '0';
+    setTimeout(() => overlay.classList.add('hidden'), 400);
+  } else {
+    err.style.display = 'block';
+    err.style.animation = 'none';
+    setTimeout(() => err.style.animation = 'shake 0.3s ease', 10);
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+  }
+}
+
 // ===== INIT =====
 window.addEventListener('DOMContentLoaded', () => {
   const d = PERIOD_DATA[currentPeriod];
   initChart(d);
   updateDashboard(currentPeriod);
+  document.getElementById('login-user').focus();
 });
 </script>
 </body>
